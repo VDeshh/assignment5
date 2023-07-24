@@ -16,7 +16,7 @@ function App(props) {
   useEffect(() => {
     const fetchInventory = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/inventory');
+        const response = await fetch('https://cpsc455-assignment5-bjvy.onrender.com/api/inventory');
         const data = await response.json();
         data.forEach(item => addItem(item));
       } catch (error) {
@@ -29,7 +29,7 @@ function App(props) {
 
   const handleAddItem = async (item) => {
     try {
-      const response = await fetch('http://localhost:3000/api/inventory', {
+      const response = await fetch('https://cpsc455-assignment5-bjvy.onrender.com/api/inventory', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ function App(props) {
   const handleDelete = async (id) => {
     console.log(id); // Add this line to check the id.
     try {
-      const response = await fetch(`http://localhost:3000/api/inventory/${id}`, {
+      const response = await fetch(`https://cpsc455-assignment5-bjvy.onrender.com/api/inventory/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) { // Check if response went through
@@ -73,8 +73,8 @@ function App(props) {
       console.error('Edit handler received undefined id');
       return;
     }
-    
-    const url = `http://localhost:3000/api/inventory/${id}`;
+
+    const url = `https://cpsc455-assignment5-bjvy.onrender.com/api/inventory/${id}`;
     const options = {
       method: 'PUT',
       headers: {
