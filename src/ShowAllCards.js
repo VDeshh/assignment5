@@ -9,6 +9,7 @@ export default function ShowAllDecks({ cards, deleteHandler, editHandler }) {
       {cards.map((curr) => (
         <Card
           key={curr._id}
+          id = {curr._id}
           card={curr}
           deleteHandler={deleteHandler}
           editHandler={editHandler}

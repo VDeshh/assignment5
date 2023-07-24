@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap-buttons';
 import 'react-bootstrap-buttons/dist/react-bootstrap-buttons.css';
 import { DetailedView } from './DetailedView';
 
-export function Card({ card, deleteHandler, editHandler }) {
+export function Card({card, deleteHandler, editHandler }) {
   console.log(card);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -25,19 +25,22 @@ export function Card({ card, deleteHandler, editHandler }) {
   };
 
   const handleSave = () => {
-    const {_id, ...cardWithoutId} = card; // Exclude the _id field
-    
     const updatedCard = {
-      ...cardWithoutId,
+      ...card,
       name: editedName,
       description: editedDescription,
       price: editedPrice,
     };
   
-    editHandler(_id, updatedCard); // Pass the card ID and updated card as arguments
+    // Create a separate object for the database update that doesn't include _id
+    const updatedCardForDB = { ...updatedCard };
+    delete updatedCardForDB._id;
+  
+    editHandler(card._id, updatedCardForDB); // Pass the card ID and updated card as arguments
   
     setIsEditing(false);
   };
+  
   
 
   return (

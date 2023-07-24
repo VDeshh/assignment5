@@ -35,11 +35,19 @@ function App(props) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(item),
+        
       });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } 
       const data = await response.json();
-      window.location.reload();
+      addItem(data);
     } catch (error) {
       console.error('Error adding item:', error);
+      if (error.response) {
+        console.error('Response status:', error.response.status);
+        console.error('Response data:', error.response.data);
+      }
     }
   };
 
@@ -60,28 +68,38 @@ function App(props) {
   };
   
   
-
   const handleEdit = async (id, updatedItem) => {
+    if(!id) {
+      console.error('Edit handler received undefined id');
+      return;
+    }
+    
+    const url = `http://localhost:3000/api/inventory/${id}`;
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedItem),
+    };
+  
+    console.log('URL:', url);
+    console.log('Request body:', options.body);
+  
     try {
-      const response = await fetch(`http://localhost:3000/api/inventory/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedItem),
-      });
-
+      const response = await fetch(url, options);
+  
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       } else {
         const data = await response.json();
         editItem(id, data);
       }
-
     } catch (error) {
       console.error('Error editing item:', error);
     }
   };
+  
 
 
   const handleSearchChange = (e) => {

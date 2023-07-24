@@ -46,9 +46,10 @@ app.post('/api/inventory', async (req, res) => {
   
   try {
     const result = await inventoryCollection.insertOne(newItem);
-    if(result.ops[0]) {
-      res.json(result.ops[0]);
-    } else {
+    console.log(result); 
+    if(result.insertedId) {
+      res.json({ _id: result.insertedId, ...newItem }); 
+    }else {
       throw new Error("Insert failed");
     }
   } catch (err) {

@@ -11,13 +11,14 @@ const cardsReducer = (state = initialState.cards, action) => {
       return [...state, action.payload];
     case DELETE_ITEM:
       return state.filter((card) => card._id !== action.payload);
-    case EDIT_ITEM:
-      return state.map((card) => {
-        if (card._id === action.payload.id) {
-          return action.payload.updatedItem;
-        }
-        return card;
-      });
+      case EDIT_ITEM:
+        return state.map((card) => {
+          if (card._id === action.payload.id) {
+            return { ...action.payload.updatedItem, _id: card._id };
+          }
+          return card;
+        });
+      
     default:
       return state;
   }
