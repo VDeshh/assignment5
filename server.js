@@ -5,11 +5,8 @@ const port = process.env.PORT || 4000;
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const corsOptions = {
-  origin: "https://cpsc455-assignment5-cmh9.onrender.com", // frontend URI (ReactJS)
-}
+app.use(cors());
 app.use(express.json());
-app.use(cors(corsOptions));
 
 const uri = "mongodb+srv://vdesh:goosebumps@cluster0.8c6uvtf.mongodb.net/?retryWrites=true&w=majority";
 
